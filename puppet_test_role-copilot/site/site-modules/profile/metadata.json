@@ -1,0 +1,48 @@
+{
+  "name": "pbarcenas-profile",
+  "version": "0.1.0",
+  "author": "Pablo Barcenas",
+  "summary": "Site profiles for frontend-linux nodes (Apache + MySQL).",
+  "license": "Apache-2.0",
+  "source": "https://example.invalid/",
+  "project_page": "https://example.invalid/",
+  "issues_url": "https://example.invalid/",
+  "dependencies": [
+    {
+      "name": "puppetlabs/apache",
+      "version_requirement": ">= 13.0.0 < 14.0.0"
+    },
+    {
+      "name": "puppetlabs/mysql",
+      "version_requirement": ">= 16.0.0 < 17.0.0"
+    },
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": ">= 9.0.0 < 11.0.0"
+    }
+  ],
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "Rocky",
+      "operatingsystemrelease": [
+        "8",
+        "9",
+        "10"
+      ]
+    },
+    {
+      "operatingsystem": "AlmaLinux",
+      "operatingsystemrelease": [
+        "8",
+        "9",
+        "10"
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": ">= 8.0.0 < 9.0.0"
+    }
+  ]
+}

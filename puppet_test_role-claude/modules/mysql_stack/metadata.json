@@ -1,0 +1,25 @@
+{
+  "name": "demo-mysql_stack",
+  "version": "1.0.0",
+  "author": "demo",
+  "license": "Apache-2.0",
+  "summary": "Installs and manages MySQL on Rocky Linux and AlmaLinux",
+  "source": "https://github.com/example/mysql_stack",
+  "dependencies": [],
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "Rocky",
+      "operatingsystemrelease": ["8", "9"]
+    },
+    {
+      "operatingsystem": "AlmaLinux",
+      "operatingsystemrelease": ["8", "9"]
+    }
+  ],
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": ">= 7.0.0 < 9.0.0"
+    }
+  ]
+}

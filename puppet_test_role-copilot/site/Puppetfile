@@ -1,0 +1,13 @@
+# Puppetfile for Puppet Enterprise Code Manager / r10k
+# Adds supported Forge modules used by our local role/profile code.
+
+forge 'https://forge.puppet.com'
+
+# Apache HTTP Server (Rocky/Alma supported)
+mod 'puppetlabs-apache', '13.1.0'
+
+# MySQL service (Rocky/Alma supported)
+mod 'puppetlabs-mysql', '16.3.0'
+
+# Common functions/types used by many modules (including our profiles)
+mod 'puppetlabs-stdlib'

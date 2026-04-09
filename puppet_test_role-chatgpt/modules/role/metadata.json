@@ -1,0 +1,9 @@
+{
+  "name": "demo-role",
+  "version": "0.1.0",
+  "author": "OpenAI",
+  "summary": "Demo role module for service-a",
+  "license": "Apache-2.0",
+  "source": "local",
+  "dependencies": []
+}

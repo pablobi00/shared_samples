@@ -1,0 +1,5 @@
+# This file stores simple Hiera data for the demo.
+# Hiera lets you separate data from code.
+---
+# This value is used by the profile to build the web page content.
+profile::frontend_linux::site_message: 'Demo environment: Apache and MySQL-compatible database installed by Puppet on Rocky/Alma Linux.'

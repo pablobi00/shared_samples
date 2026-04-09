@@ -1,0 +1,13 @@
+# This file tells Puppet how to look up Hiera data.
+version: 5
+
+defaults:
+  # This is the relative path where YAML data files live.
+  datadir: data
+  # This tells Puppet that our data files use YAML format.
+  data_hash: yaml_data
+
+hierarchy:
+  - name: "Common data"
+    # This file is always searched.
+    path: "common.yaml"

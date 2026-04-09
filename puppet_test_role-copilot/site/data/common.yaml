@@ -1,0 +1,16 @@
+---
+# Defaults for profile::service_a
+profile::service_a::apache_port: 80
+profile::service_a::docroot: '/var/www/service-a'
+profile::service_a::servername: "%{facts.fqdn}"
+
+# MySQL configuration
+# NOTE: Replace these with your real secrets (use eyaml or a secrets backend in production).
+profile::service_a::mysql_root_password: 'ChangeMe-Root'
+profile::service_a::app_db_name: 'service_a'
+profile::service_a::app_db_user: 'servicea'
+profile::service_a::app_db_password: 'ChangeMe-App'
+
+# Optional: choose server package flavor on RHEL-like systems.
+# 'default' lets puppetlabs-mysql pick; 'mariadb' uses mariadb-server.
+profile::service_a::mysql_flavor: 'default'

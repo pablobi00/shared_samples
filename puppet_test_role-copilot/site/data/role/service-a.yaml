@@ -1,0 +1,6 @@
+---
+# Example role data for 'service-a'
+# If you set fact `role=service-a`, this file will be used.
+# You can override any profile::service_a parameters here.
+
+# profile::service_a::apache_port: 8080

@@ -1,0 +1,9 @@
+{
+  "name": "demo-profile",
+  "version": "0.1.0",
+  "author": "OpenAI",
+  "summary": "Demo profile module for frontend Linux servers",
+  "license": "Apache-2.0",
+  "source": "local",
+  "dependencies": []
+}

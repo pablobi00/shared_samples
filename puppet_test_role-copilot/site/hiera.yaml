@@ -1,0 +1,15 @@
+---
+version: 5
+
+defaults:
+  datadir: data
+  data_hash: yaml_data
+
+hierarchy:
+  # Role-specific data (optional)
+  - name: "Role data"
+    path: "role/%{facts.role}.yaml"
+
+  # Fallback
+  - name: "Common"
+    path: "common.yaml"

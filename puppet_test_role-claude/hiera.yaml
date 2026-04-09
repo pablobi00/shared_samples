@@ -1,0 +1,14 @@
+# hiera.yaml
+# Hiera = Puppet's built-in key/value lookup system.
+# It lets you separate configuration data from your code.
+---
+version: 5
+
+defaults:
+  datadir: data          # Hiera will look for .yaml files inside the /data folder
+  data_hash: yaml_data   # Tell Hiera the files are in YAML format
+
+hierarchy:
+  # Hierarchy is checked top-to-bottom. First match wins.
+  - name: "Common"        # A single global data file for this demo
+    path: "common.yaml"

@@ -1,0 +1,12 @@
+# data/common.yaml
+# This is the Hiera data file. It stores configuration values that your
+# Puppet code can look up at runtime — keeping data OUT of your code.
+---
+
+# --- Apache settings ---
+# The port Apache will listen on (looked up by apache_stack module)
+apache_stack::port: 80
+
+# --- MySQL settings ---
+# Root password for MySQL (in a real lab use hiera-eyaml to encrypt this)
+mysql_stack::root_password: 'Ch4ng3M3!'
