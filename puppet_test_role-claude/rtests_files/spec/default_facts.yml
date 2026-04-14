@@ -1,0 +1,6 @@
+---
+osfamily: RedHat
+operatingsystem: Rocky
+operatingsystemmajrelease: '8'
+operatingsystemrelease: '8.6'
+architecture: x86_64
