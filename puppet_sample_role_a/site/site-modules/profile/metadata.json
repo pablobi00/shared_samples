@@ -1,0 +1,27 @@
+{
+  "name": "pbarcenas-profile",
+  "version": "0.1.0",
+  "author": "Pablo Barcenas",
+  "summary": "Profiles for sample_role_a: profile_a, profile_a_1, profile_a_2, profile_b.",
+  "license": "Apache-2.0",
+  "source": "https://example.invalid/",
+  "project_page": "https://example.invalid/",
+  "issues_url": "https://example.invalid/",
+  "dependencies": [],
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "Rocky",
+      "operatingsystemrelease": ["8", "9", "10"]
+    },
+    {
+      "operatingsystem": "AlmaLinux",
+      "operatingsystemrelease": ["8", "9", "10"]
+    }
+  ],
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": ">= 8.0.0 < 9.0.0"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+# Puppetfile for Puppet Enterprise Code Manager / r10k
+# All three custom modules (module_1, module_2, module_3) use only
+# native Puppet resource types (file, package, service) and do not
+# require any Forge modules.
+#
+# If you later add Forge-backed wrappers, declare them here, for example:
+#
+#   forge 'https://forge.puppet.com'
+#   mod 'puppetlabs-apache', '13.1.0'
+#   mod 'puppetlabs-mysql',  '16.3.0'
+#   mod 'puppetlabs-stdlib'
+
+forge 'https://forge.puppet.com'
+
+# stdlib is available for use in profiles/modules if needed in the future.
+mod 'puppetlabs-stdlib'
