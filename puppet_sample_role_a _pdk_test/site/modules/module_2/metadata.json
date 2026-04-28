@@ -1,31 +1,21 @@
 {
-  "name": "pbarcenas-module_1",
+  "name": "pbarcenas-module_2",
   "version": "0.1.0",
   "author": "Pablo Barcenas",
-  "summary": "Manages file_a_hosts, file_b_template, and file_c_content file resources.",
+  "summary": "Manages httpd web server, chrony NTP, system timezone (America/Vancouver), and locale (en_CA.UTF-8).",
   "license": "Apache-2.0",
   "source": "https://example.invalid/",
   "project_page": "https://example.invalid/",
   "issues_url": "https://example.invalid/",
-  "dependencies": [
-
-  ],
+  "dependencies": [],
   "operatingsystem_support": [
     {
       "operatingsystem": "Rocky",
-      "operatingsystemrelease": [
-        "8",
-        "9",
-        "10"
-      ]
+      "operatingsystemrelease": ["8", "9", "10"]
     },
     {
       "operatingsystem": "AlmaLinux",
-      "operatingsystemrelease": [
-        "8",
-        "9",
-        "10"
-      ]
+      "operatingsystemrelease": ["8", "9", "10"]
     }
   ],
   "requirements": [
@@ -33,8 +23,5 @@
       "name": "puppet",
       "version_requirement": ">= 8.0.0 < 9.0.0"
     }
-  ],
-  "pdk-version": "3.6.1",
-  "template-url": "pdk-default#3.6.1",
-  "template-ref": "tags/3.6.1-0-gb9426e5"
+  ]
 }

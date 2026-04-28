@@ -1,0 +1,250 @@
+================================================================================
+  puppet_sample_role_a — Directory & File Structure
+================================================================================
+
+This sample follows the Puppet "Roles and Profiles" pattern.
+All paths below are relative to the root of this sample directory.
+
+  puppet_sample_role_a/               <- root of this sample
+  │
+  ├── structure.txt                   <- this file
+  │
+  └── site/                           <- maps to one Puppet environment
+      │
+      ├── environment.conf            <- tells Puppet where to find modules
+      ├── hiera.yaml                  <- Hiera 5 hierarchy configuration
+      ├── Puppetfile                  <- Forge modules pulled by Code Manager / r10k
+      │
+      ├── data/                       <- Hiera data directory
+      │   └── common.yaml             <- fallback data applied to every node
+      │
+      ├── site-modules/               <- local role & profile modules (not from Forge)
+      │   │
+      │   ├── role/
+      │   │   ├── metadata.json
+      │   │   └── manifests/
+      │   │       └── sample_role_a.pp    <- role::sample_role_a
+      │   │                                  includes profile::profile_a
+      │   │                                          profile::profile_b
+      │   │
+      │   └── profile/
+      │       ├── metadata.json
+      │       └── manifests/
+      │           ├── profile_a.pp        <- profile::profile_a
+      │           │                          includes profile::profile_a_1
+      │           │                                   profile::profile_a_2
+      │           │
+      │           ├── profile_a_1.pp      <- profile::profile_a_1
+      │           │                          includes module_1, module_2
+      │           │
+      │           ├── profile_a_2.pp      <- profile::profile_a_2
+      │           │                          includes module_1
+      │           │
+      │           └── profile_b.pp        <- profile::profile_b
+      │                                      includes module_2, module_3
+      │
+      └── modules/                    <- local component modules
+          │
+          ├── module_1/               <- file resource examples
+          │   ├── metadata.json
+          │   ├── manifests/
+          │   │   └── init.pp         <- class module_1
+          │   │                          file_a_hosts  -> /etc/hosts (sourced from files/hosts)
+          │   │                          file_b_template -> /etc/module_1/b_template.txt
+          │   │                          file_c_content  -> /etc/module_1/hello.txt (inline)
+          │   └── files/
+          │       ├── hosts           <- static /etc/hosts content
+          │       └── b_template.txt  <- 3-line text file deployed to the node
+          │
+          ├── module_2/               <- httpd + chrony + timezone/locale
+          │   ├── metadata.json
+          │   ├── manifests/
+          │   │   └── init.pp         <- class module_2
+          │   │                          package/service: httpd
+          │   │                          package/service: chronyd
+          │   │                          file: /etc/chrony.conf  (sourced from files/chrony_config)
+          │   │                          file: /etc/localtime    (symlink -> America/Vancouver)
+          │   │                          file: /etc/timezone     (inline content)
+          │   │                          file: /etc/locale.conf  (en_CA.UTF-8 — 24h, YYYY.mm.dd)
+          │   └── files/
+          │       └── chrony_config   <- chrony.conf with CA NTP pool servers
+          │
+          └── module_3/               <- mariadb default installation
+              ├── metadata.json
+              └── manifests/
+                  └── init.pp         <- class module_3
+                                         package: mariadb-server, mariadb
+                                         service: mariadb
+
+
+================================================================================
+  Class Inclusion Tree
+================================================================================
+
+  role::sample_role_a
+  ├── profile::profile_a
+  │   ├── profile::profile_a_1
+  │   │   ├── module_1   (file_a_hosts, file_b_template, file_c_content)
+  │   │   └── module_2   (httpd, chrony, timezone, locale)
+  │   └── profile::profile_a_2
+  │       └── module_1   (file_a_hosts, file_b_template, file_c_content)
+  └── profile::profile_b
+      ├── module_2   (httpd, chrony, timezone, locale)
+      └── module_3   (mariadb-server, mariadb service)
+
+Note: module_1 and module_2 are each included from more than one profile.
+Puppet is idempotent — if two profiles include the same class, Puppet
+applies it only once per catalog. This is expected and correct behaviour.
+
+
+================================================================================
+  Absolute Paths in a Standard Puppet Enterprise Deployment
+================================================================================
+
+  Puppet Enterprise stores environments under:
+    /etc/puppetlabs/code/environments/<environment_name>/
+
+  For the "production" environment all files map as follows:
+
+  LOCAL PATH (this repo)                               PE PATH
+  ─────────────────────────────────────────────────────────────────────────────
+  site/environment.conf                                /etc/puppetlabs/code/environments/production/environment.conf
+  site/hiera.yaml                                      /etc/puppetlabs/code/environments/production/hiera.yaml
+  site/Puppetfile                                      /etc/puppetlabs/code/environments/production/Puppetfile
+  site/data/common.yaml                                /etc/puppetlabs/code/environments/production/data/common.yaml
+
+  site/site-modules/role/metadata.json                 /etc/puppetlabs/code/environments/production/site-modules/role/metadata.json
+  site/site-modules/role/manifests/sample_role_a.pp    /etc/puppetlabs/code/environments/production/site-modules/role/manifests/sample_role_a.pp
+
+  site/site-modules/profile/metadata.json              /etc/puppetlabs/code/environments/production/site-modules/profile/metadata.json
+  site/site-modules/profile/manifests/profile_a.pp     /etc/puppetlabs/code/environments/production/site-modules/profile/manifests/profile_a.pp
+  site/site-modules/profile/manifests/profile_a_1.pp   /etc/puppetlabs/code/environments/production/site-modules/profile/manifests/profile_a_1.pp
+  site/site-modules/profile/manifests/profile_a_2.pp   /etc/puppetlabs/code/environments/production/site-modules/profile/manifests/profile_a_2.pp
+  site/site-modules/profile/manifests/profile_b.pp     /etc/puppetlabs/code/environments/production/site-modules/profile/manifests/profile_b.pp
+
+  site/modules/module_1/metadata.json                  /etc/puppetlabs/code/environments/production/modules/module_1/metadata.json
+  site/modules/module_1/manifests/init.pp              /etc/puppetlabs/code/environments/production/modules/module_1/manifests/init.pp
+  site/modules/module_1/files/hosts                    /etc/puppetlabs/code/environments/production/modules/module_1/files/hosts
+  site/modules/module_1/files/b_template.txt           /etc/puppetlabs/code/environments/production/modules/module_1/files/b_template.txt
+
+  site/modules/module_2/metadata.json                  /etc/puppetlabs/code/environments/production/modules/module_2/metadata.json
+  site/modules/module_2/manifests/init.pp              /etc/puppetlabs/code/environments/production/modules/module_2/manifests/init.pp
+  site/modules/module_2/files/chrony_config            /etc/puppetlabs/code/environments/production/modules/module_2/files/chrony_config
+
+  site/modules/module_3/metadata.json                  /etc/puppetlabs/code/environments/production/modules/module_3/metadata.json
+  site/modules/module_3/manifests/init.pp              /etc/puppetlabs/code/environments/production/modules/module_3/manifests/init.pp
+
+
+================================================================================
+  How to Apply role::sample_role_a to a Node in the "production" Environment
+================================================================================
+
+PREREQUISITES
+  - Puppet Enterprise is installed and running.
+  - You have access to the PE console (web UI) or can run puppet commands on
+    the Puppet primary server.
+  - The node is already registered as a Puppet agent (it has checked in at least
+    once and its certificate is signed).
+
+─────────────────────────────────────────────────────────────────────────────
+STEP 1 — Add this code to your control repo
+─────────────────────────────────────────────────────────────────────────────
+  Copy the contents of the site/ directory into the root of the "production"
+  branch of your control repository, preserving the directory structure.
+
+  Your control repo "production" branch should look like:
+    production/
+      environment.conf
+      hiera.yaml
+      Puppetfile
+      data/
+        common.yaml
+      site-modules/
+        role/  ...
+        profile/  ...
+      modules/
+        module_1/  ...
+        module_2/  ...
+        module_3/  ...
+
+─────────────────────────────────────────────────────────────────────────────
+STEP 2 — Deploy the environment with Code Manager
+─────────────────────────────────────────────────────────────────────────────
+  On the Puppet primary server, run:
+
+    puppet-code deploy production --wait
+
+  This tells Code Manager to pull your control repo and install any Forge
+  modules listed in the Puppetfile into the production environment.
+
+  Verify the environment deployed successfully:
+
+    puppet-code status
+
+─────────────────────────────────────────────────────────────────────────────
+STEP 3 — Classify the node in the PE Console
+─────────────────────────────────────────────────────────────────────────────
+  Option A — Via the PE Web Console (recommended for beginners)
+  ┌─────────────────────────────────────────────────────────────┐
+  │ 1. Open the PE console in your browser.                     │
+  │ 2. Go to: Node groups  →  Add group                        │
+  │    Name        : sample_role_a                              │
+  │    Environment : production                                 │
+  │ 3. Click Add.                                               │
+  │ 4. Open the new group → Classes tab → Add class:            │
+  │    Type: role::sample_role_a  → click Add class             │
+  │ 5. Click Commit changes.                                    │
+  │ 6. In the group's Rules tab, pin or add a rule to match     │
+  │    the target node(s) (e.g. by name or a fact).             │
+  └─────────────────────────────────────────────────────────────┘
+
+  Option B — Via the Puppet CLI on the node (for a quick one-off test)
+
+    puppet agent --test --environment production
+
+  This applies the catalog immediately and shows the full output.
+  Use this to verify the role works before pinning it via the console.
+
+─────────────────────────────────────────────────────────────────────────────
+STEP 4 — Run the Puppet agent on the target node
+─────────────────────────────────────────────────────────────────────────────
+  SSH into the target node and run:
+
+    sudo puppet agent --test
+
+  The agent will:
+    1. Contact the Puppet primary server and request a catalog.
+    2. Receive a catalog that includes role::sample_role_a and all
+       classes it includes (profiles and modules).
+    3. Apply every resource declared in those classes.
+    4. Report success or any failures back to the PE console.
+
+  A successful run ends with a line similar to:
+    Notice: Applied catalog in X.XX seconds
+
+─────────────────────────────────────────────────────────────────────────────
+STEP 5 — Verify the results on the node
+─────────────────────────────────────────────────────────────────────────────
+  After a successful Puppet run, confirm the managed resources exist:
+
+    # File resources from module_1
+    cat /etc/hosts
+    cat /etc/module_1/b_template.txt
+    cat /etc/module_1/hello.txt
+
+    # httpd from module_2
+    systemctl status httpd
+
+    # chrony from module_2
+    systemctl status chronyd
+    chronyc tracking
+
+    # Timezone and locale from module_2
+    timedatectl
+    locale
+
+    # MariaDB from module_3
+    systemctl status mariadb
+    mysql --version
+
+================================================================================

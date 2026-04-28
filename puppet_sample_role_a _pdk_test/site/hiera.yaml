@@ -1,0 +1,18 @@
+---
+# hiera.yaml — Hiera 5 configuration for the production environment.
+version: 5
+
+defaults:
+  datadir: data
+  data_hash: yaml_data
+
+hierarchy:
+  # Role-specific data: looked up using the custom 'role' fact.
+  # Set the fact on a node with: facter -p role
+  # or via a PE trusted fact / external fact.
+  - name: "Role data"
+    path: "role/%{facts.role}.yaml"
+
+  # Fallback: applies to every node in this environment.
+  - name: "Common"
+    path: "common.yaml"

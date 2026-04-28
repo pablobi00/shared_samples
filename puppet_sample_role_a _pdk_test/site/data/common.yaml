@@ -1,0 +1,8 @@
+---
+# data/common.yaml — Hiera common data for the production environment.
+# Values here apply to every node unless overridden by a more specific
+# hierarchy level (e.g. data/role/sample_role_a.yaml).
+#
+# This sample has no Hiera-driven parameters yet because module_1,
+# module_2, and module_3 use hard-coded defaults.
+# Add key/value pairs here as you parameterise your modules.
