@@ -1,0 +1,24 @@
+# data/common.yaml - Staging environment
+# Hiera data that applies to ALL nodes in the staging environment.
+---
+
+# --- NTP settings ---
+# Public NTP pool servers used by chrony on RHEL nodes.
+profiles::base::ntp::ntp_servers:
+  - '0.rhel.pool.ntp.org'
+  - '1.rhel.pool.ntp.org'
+  - '2.rhel.pool.ntp.org'
+
+# Target timezone for all nodes in this environment.
+profiles::base::ntp::timezone: 'America/Vancouver'
+
+# --- Middleware: Kafka settings ---
+# Confluent Platform major version for Kafka installation.
+# Update this value to change the Kafka version across all middleware nodes.
+profiles::middleware::confluent_major_version: '7.6'
+
+# Java version for the middleware tier.
+profiles::middleware::java_package: 'java-21-openjdk'
+
+# --- Backend: PostgreSQL settings ---
+profiles::backend::postgresql_package: 'postgresql-server'

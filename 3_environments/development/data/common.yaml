@@ -1,0 +1,21 @@
+# data/common.yaml - Development environment
+# Hiera data that applies to ALL nodes in the development environment.
+# These values are looked up by profiles using the lookup() function.
+---
+
+# --- NTP settings ---
+# Public NTP pool servers used by chrony on RHEL nodes.
+profiles::base::ntp::ntp_servers:
+  - '0.rhel.pool.ntp.org'
+  - '1.rhel.pool.ntp.org'
+  - '2.rhel.pool.ntp.org'
+
+# Target timezone for all RHEL nodes in this environment.
+profiles::base::ntp::timezone: 'America/Vancouver'
+
+# --- Application server settings ---
+# Java version installed on application_server nodes.
+profiles::application_server::java_package: 'java-21-openjdk'
+
+# PostgreSQL major version for the application server.
+profiles::application_server::postgresql_package: 'postgresql-server'
