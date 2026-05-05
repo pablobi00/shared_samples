@@ -1,0 +1,28 @@
+# hiera.yaml - Development environment
+# Absolute path in Puppet Enterprise:
+# /etc/puppetlabs/code/environments/development/hiera.yaml
+#
+# Hiera is Puppet's key-value data lookup system.
+# It lets you separate data (like package versions or server addresses)
+# from your Puppet code, so you don't hard-code values in manifests.
+---
+version: 5
+
+hierarchy:
+  # Most specific: data for a single node, matched by its certificate name.
+  - name: "Node-specific data"
+    path: "data/nodes/%{trusted.certname}.yaml"
+
+  # OS family data: applies to all RedHat nodes or all Windows nodes, etc.
+  - name: "OS family data"
+    path: "data/os/%{facts.os.family}.yaml"
+
+  # Least specific: applies to every node in this environment.
+  - name: "Common data"
+    path: "data/common.yaml"
+
+defaults:
+  # All data files use YAML format.
+  data_hash: yaml_data
+  # Hiera looks for data files relative to this directory.
+  datadir: data

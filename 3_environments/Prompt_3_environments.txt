@@ -1,0 +1,35 @@
+Prompt for 3_environments:
+
+
+Use instruction in puppet_instructions.md.
+For a demo environment build the following puppet code - under a directory called 3_environments.
+
+Environments names are:
+
+1. Development
+2. Staging
+3. Production.
+
+All environments have their own base profiles:
+
+1. Set ntp/timezone to Americas/Vancouver (use crony to set timedatectl), they use YYY.MM.DD and 24hrs format
+2. Enable firewall service with ssh access enabled.
+3. Add netstat, iftop, curl and wget if not present 
+
+All nodes in the environments are RHEL (latest supported versions by Puppet 2025.10), except in Developer environment - where Developer profile machines are Windows desktops.
+
+Development has 2 profiles with he following services:	
+
+    Developer_system - VisualStudio Code
+    Application_server - Web server, PostgreSQL, Java
+
+Staging and Production have 3 different profiles:
+
+- Frontend:
+    - Webserver role - includes web server, firewall rules for Https (80 and 8080)
+- Middleware
+    - Includes web server role
+    - Application role includes: Java, Python FastAPI service, Kafka
+- Backend:
+    - Requires PostgreSQL
+ 
